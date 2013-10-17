@@ -53,15 +53,6 @@ module OmniContacts
           contact[:email] = entry['gd$email'][0]['address'] if entry['gd$email']
           contact[:first_name], contact[:last_name], contact[:name] = email_to_name(contact[:name]) if !contact[:name].nil? && contact[:name].include?('@')
           contact[:first_name], contact[:last_name], contact[:name] = email_to_name(contact[:email]) if contact[:name].nil? && contact[:email]
-          #format - year-month-date
-          if entry['gContact$birthday']
-            birthday = entry['gContact$birthday']['when'].split('-')
-            contact[:birthday] = birthday_format(birthday[2], birthday[3], nil) if birthday.size == 4
-            contact[:birthday] = birthday_format(birthday[1], birthday[2], birthday[0]) if birthday.size == 3
-          end
-          # value is either "male" or "female"
-          contact[:gender] = entry['gContact$gender']['value']  if entry['gContact$gender']
-          contact[:relation] = entry['gContact$relation']['rel'] if entry['gContact$relation']
 
           contacts << contact if contact[:name]
         end
